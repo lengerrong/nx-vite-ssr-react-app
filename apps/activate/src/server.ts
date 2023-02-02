@@ -9,7 +9,7 @@ export async function createServer(
   root = process.cwd(),
   hmrPort = 4200,
 ) {
-  const resolve = (p) => path.resolve(__dirname, p)
+  const resolve = (p: string) => path.resolve(__dirname, p)
 
   const app = express()
 
@@ -53,8 +53,8 @@ export async function createServer(
       const html = template.replace(`<!--app-html-->`, appHtml)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-    } catch (e) {
-      vite.ssrFixStacktrace(e)
+    } catch (e: unknown) {
+      vite.ssrFixStacktrace(e as Error)
       console.error(e)
       res.status(500).end(e)
     }

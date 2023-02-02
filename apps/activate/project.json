@@ -26,7 +26,7 @@
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/activate/server",
-        "ssr": "src/server.js"
+        "ssr": "src/server.ts"
       },
       "configurations": {
         "development": {
@@ -43,7 +43,7 @@
       "defaultConfiguration": "development",
       "options": {
         "outputPath": "dist/apps/activate/server",
-        "main": "apps/activate/src/server.js",
+        "main": "apps/activate/src/server.ts",
         "tsConfig": "apps/activate/tsconfig.server.json",
         "target": "node",
         "compiler": "babel",
