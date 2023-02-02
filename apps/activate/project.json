@@ -9,7 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/apps/activate"
+        "outputPath": "dist/apps/activate/browser"
       },
       "configurations": {
         "development": {
@@ -17,6 +17,60 @@
         },
         "production": {
           "mode": "production"
+        }
+      }
+    },
+    "ssr-vite-build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/activate/server",
+        "ssr": "src/server.ts"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "ssr-webpack-build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "development",
+      "options": {
+        "outputPath": "dist/apps/activate/server",
+        "main": "apps/activate/src/server.js",
+        "tsConfig": "apps/activate/tsconfig.server.json",
+        "target": "node",
+        "compiler": "babel",
+        "outputHashing": "none",
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "ssr-serve": {
+      "executor": "@nrwl/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "activate:ssr-webpack-build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "activate:ssr-webpack-build:development"
+        },
+        "production": {
+          "buildTarget": "activate:ssr-webpack-build:production"
         }
       }
     },

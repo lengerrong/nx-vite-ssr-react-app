@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/server",
+    "target": "ES2020"
+  },
+  "include": ["src/main.server.tsx", "server.ts"]
+}
