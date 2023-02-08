@@ -1,4 +1,6 @@
 # Activate
+An example project set up for React with Vite SSR in NX workspace.
+See [Vite SSR for React in NX workspace](https://errong.win/vite-ssr-for-react-app-in-nx-workspace/) for more details.
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
