@@ -63,7 +63,8 @@
       "executor": "@nrwl/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "activate:ssr-webpack-build"
+        "buildTarget": "activate:ssr-webpack-build",
+        "watch": false
       },
       "configurations": {
         "development": {
