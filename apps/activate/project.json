@@ -59,7 +59,7 @@
         }
       }
     },
-    "ssr-serve": {
+    "serve": {
       "executor": "@nrwl/js:node",
       "defaultConfiguration": "development",
       "options": {
@@ -75,7 +75,7 @@
         }
       }
     },
-    "serve": {
+    "vite-dev-serve": {
       "executor": "@nrwl/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {

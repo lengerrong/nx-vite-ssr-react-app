@@ -6,7 +6,6 @@ import express from 'express'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export async function createServer(
-  root = process.cwd(),
   hmrPort = 4224,
 ) {
   const resolve = (p: string) => path.resolve(__dirname, p)
@@ -19,7 +18,7 @@ export async function createServer(
   const vite = await (
     await import('vite')
   ).createServer({
-    root,
+    root: path.join(process.cwd(), "apps/activate"),
     logLevel: 'info',
     server: {
       middlewareMode: true,
@@ -38,15 +37,6 @@ export async function createServer(
   // use vite's connect instance as middleware
   app.use(vite.middlewares)
 
-  // serve the app source root as static resources
-  // so that we can easily load styles.css from index.html
-  app.get(
-    "*.*",
-    express.static(path.join(process.cwd(), "apps/activate"), {
-      maxAge: "1d",
-    })
-  );
-
   app.use('*', async (req, res) => {
     try {
       const url = req.originalUrl
@@ -56,8 +46,8 @@ export async function createServer(
       // always read fresh template in dev
       template = fs.readFileSync(resolve('../index.html'), 'utf-8')
       template = await vite.transformIndexHtml(url, template)
-      const { render } = (await vite.ssrLoadModule('/apps/activate/src/main.server.tsx'));
-
+      const { render } = (await vite.ssrLoadModule('/src/main.server.tsx'));
+      // SSR
       const appHtml = render()
       const html = template.replace(`<!--app-html-->`, appHtml)
 
