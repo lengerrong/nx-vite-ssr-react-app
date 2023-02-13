@@ -63,15 +63,15 @@
       "executor": "@nrwl/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "activate:ssr-webpack-build",
+        "buildTarget": "activate:ssr-vite-build",
         "watch": false
       },
       "configurations": {
         "development": {
-          "buildTarget": "activate:ssr-webpack-build:development"
+          "buildTarget": "activate:ssr-vite-build:development"
         },
         "production": {
-          "buildTarget": "activate:ssr-webpack-build:production"
+          "buildTarget": "activate:ssr-vite-build:production"
         }
       }
     },
