@@ -4,7 +4,7 @@
   "sourceRoot": "./src",
   "projectType": "application",
   "targets": {
-    "build": {
+    "browser-build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
@@ -20,13 +20,15 @@
         }
       }
     },
-    "ssr-vite-build": {
+    "ssr-build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
+        "emptyOutDir": false,
         "outputPath": "dist/apps/activate/server",
-        "ssr": "src/server.ts"
+        "ssr": "src/main.server.tsx",
+        "configFile": "apps/activate/vite.config.ssr.ts"
       },
       "configurations": {
         "development": {
@@ -37,19 +39,16 @@
         }
       }
     },
-    "ssr-webpack-build": {
-      "executor": "@nx/webpack:webpack",
+    "server-build": {
+      "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "development",
+      "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/apps/activate/server",
-        "main": "apps/activate/src/server.ts",
-        "tsConfig": "apps/activate/tsconfig.server.json",
-        "target": "node",
-        "compiler": "babel",
-        "outputHashing": "none",
-        "webpackConfig": "@nx/react/plugins/webpack",
-        "babelUpwardRootMode": true
+        "ssr": "src/server.ts",
+        "configFile": "apps/activate/vite.config.server.ts",
+        "emptyOutDir": false,
+        "outputFileName": "server.mjs"
       },
       "configurations": {
         "development": {
@@ -61,18 +60,18 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/js:node",
+      "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "activate:ssr-webpack-build",
-        "watch": false
+        "buildTarget": "activate:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "activate:ssr-webpack-build:development"
+          "buildTarget": "activate:server-build:development"
         },
         "production": {
-          "buildTarget": "activate:ssr-webpack-build:production"
+          "buildTarget": "activate:server-build:production",
+          "waitUntilTargets": ["activate:browser-build:production", "activate:ssr-build:production"]
         }
       }
     },
@@ -80,15 +79,15 @@
       "executor": "@nx/vite:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "activate:build"
+        "buildTarget": "activate:browser-build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "activate:build:development",
+          "buildTarget": "activate:browser-build:development",
           "hmr": true
         },
         "production": {
-          "buildTarget": "activate:build:production",
+          "buildTarget": "activate:browser-build:production",
           "hmr": false
         }
       }
