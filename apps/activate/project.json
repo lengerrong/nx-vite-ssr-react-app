@@ -4,6 +4,15 @@
   "sourceRoot": "./src",
   "projectType": "application",
   "targets": {
+    "build": {
+      "dependsOn": ["browser-build", "ssr-build", "server-build"],
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [{
+          "command":"echo 'build done'"
+        }]
+      }
+    },
     "browser-build": {
       "executor": "@nx/vite:build",
       "outputs": ["{options.outputPath}"],
